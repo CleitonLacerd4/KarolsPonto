@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Karol’sPonto</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#eef2f7;--card:#fff;--ink:#14213d;--mut:#556580;--line:#d6dde8;--pri:#12355b;--onpri:#fff;--acc:#1d6fb8;--onacc:#fff;--soft:#e6f0fa;--ok:#16794c;--bad:#b42318;--warn:#9a5b06;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b121c;--card:#142031;--ink:#e7eef7;--mut:#9db0c8;--line:#26374d;--pri:#0d2a49;--acc:#5aa9e6;--onacc:#06192e;--soft:#1b2d45;--ok:#4cc38a;--bad:#f2837a;--warn:#e8b04d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b121c;--card:#142031;--ink:#e7eef7;--mut:#9db0c8;--line:#26374d;--pri:#0d2a49;--acc:#5aa9e6;--onacc:#06192e;--soft:#1b2d45;--ok:#4cc38a;--bad:#f2837a;--warn:#e8b04d;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "IBM Plex Sans","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;font-variant-numeric:tabular-nums}
+header{background:var(--pri);color:var(--onpri)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header .wrap{display:flex;align-items:center;gap:12px;padding-top:14px;padding-bottom:14px}
+.logo{width:38px;height:38px;border-radius:6px;background:var(--acc);color:var(--onacc);display:grid;place-items:center;font-weight:600;font-size:18px;flex:none}
+h1{font-size:20px;margin:0;font-weight:600}
+header small{display:block;opacity:.8;font-size:12px}
+h2{font-size:16px;margin:0;font-weight:600}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#now{margin-left:auto;background:var(--acc);color:var(--onacc);border:0;border-radius:6px;padding:9px 14px;font-weight:600}
+#now:disabled{opacity:.55;cursor:default}
+main.wrap{display:grid;gap:16px;padding-top:16px;padding-bottom:28px}
+@media(min-width:900px){main.wrap{grid-template-columns:minmax(0,1fr) 320px;align-items:start}}
+.col{display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px}
+.cfg{display:flex;flex-wrap:wrap;gap:12px 28px}
+.cfg>div{display:grid;gap:6px}
+.lbl{font-size:13px;color:var(--mut)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;background:var(--card);color:var(--ink);padding:8px 12px}
+.lbl:empty{display:none}
+.seg button.on{background:var(--acc);color:var(--onacc);font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:10px}
+.st{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;display:grid;gap:2px;align-content:start}
+.st span{font-size:12.5px;color:var(--mut)}
+.st b{font-size:22px;font-weight:600}
+.st.hero{background:var(--pri);border-color:var(--pri)}
+.st.hero span{color:var(--onpri);opacity:.85}
+.st.hero b{font-size:32px;color:var(--onpri);line-height:1.1}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+@media(max-width:520px){.stats{grid-template-columns:1fr 1fr}.st.hero{grid-column:1/-1}}
+.wh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.nav{display:flex;gap:6px}
+.nav button,.mn button{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 11px}
+.day{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:8px;padding:12px 14px}
+.day.td{border-left-color:var(--acc)}
+.day+.day{margin-top:10px}
+.day-actions{margin-left:auto;display:flex;align-items:center;gap:6px}
+.clear-day{border:1px solid var(--line);background:var(--card);color:var(--bad);border-radius:6px;padding:5px 9px;font-size:12px}
+.clear-day:active{background:var(--soft)}
+.lunch-duration{width:76px;padding:5px 6px;font-size:13px}
+.dh{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin-bottom:10px}
+.dh b{font-size:16px;font-weight:600}
+.dt,.goal{color:var(--mut);font-size:13px}
+.lu{margin-left:auto;font-size:13px;color:var(--mut);display:flex;align-items:center;gap:6px}
+select,input{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:7px 8px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:560px){.g{grid-template-columns:repeat(4,1fr)}}
+.g label{font-size:13px;color:var(--mut);display:grid;gap:4px}
+.g input{width:100%}
+.cs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:var(--soft);border-radius:999px;padding:4px 12px;font-size:13.5px}
+.chip.pri{background:var(--pri);color:var(--onpri)}
+.chip.bad,.chip.ok,.chip.warn{font-weight:500}
+.mn{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.cal i{font-style:normal;font-size:11.5px;color:var(--mut);padding:4px 0}
+.cal button{aspect-ratio:1;border:0;border-radius:6px;background:none;color:var(--ink);position:relative;padding:0}
+.cal .o{color:var(--mut);opacity:.55}
+.cal .w{background:var(--soft)}
+.cal .t{outline:2px solid var(--acc);outline-offset:-2px;font-weight:600}
+.cal .h::after{content:"";position:absolute;bottom:4px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--ok)}
+.note{font-size:12.5px;color:var(--mut);margin:10px 2px 0}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:8px}
+.toolbar button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:8px 11px;font-weight:500}
+.toolbar button.primary{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+.monthgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+.monthitem{background:var(--soft);border-radius:7px;padding:10px;display:grid;gap:2px}
+.monthitem span{font-size:12px;color:var(--mut)}
+.monthitem b{font-size:20px}
+.day.incomplete{border-left-color:var(--warn)}
+@media print{header #now,.toolbar,.nav,.mn button{display:none!important}body{background:#fff;color:#111}.card,.day,.st{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="logo">K</div><div><h1>Karol’sPonto</h1><small>Jornada e ponto semanal</small></div><button id="now"></button></div></header>
+<main class="wrap">
+<div class="col">
+<section class="card cfg"><div><span class="lbl">Jornada diária</span><div class="seg" id="sj"></div><span class="lbl" id="fn"></span></div><div><span class="lbl">Almoço padrão</span><div class="seg" id="sl"></div></div></section>
+<div class="stats" id="st"></div>
+  <section class="card">
+    <div class="wh"><h2>Fechamento mensal</h2><span class="lbl" id="monthlabel"></span></div>
+    <div class="monthgrid" id="monthsummary"></div>
+    <p class="note">O saldo considera somente dias com as quatro marcações completas. A previsão não inclui faltas ou feriados não cadastrados.</p>
+  </section>
+  <section class="card">
+    <div class="wh"><h2>Dados e relatórios</h2></div>
+    <div class="toolbar" style="margin-top:10px">
+      <button class="primary" id="backup">Baixar backup</button>
+      <button id="restore">Restaurar backup</button>
+      <button id="csv">Exportar CSV</button>
+      <button id="print">Imprimir / salvar PDF</button>
+      <input id="backupfile" type="file" accept="application/json,.json" hidden>
+    </div>
+    <p class="note">Faça backups regularmente. Os registros ficam neste navegador e podem ser perdidos ao limpar os dados do site ou trocar de aparelho.</p>
+  </section>
+<div class="wh"><h2 id="wk"></h2><div class="nav"><button data-w="-1" aria-label="Semana anterior">‹</button><button data-w="0">Hoje</button><button data-w="1" aria-label="Próxima semana">›</button></div></div>
+<div id="days"></div>
+</div>
+<aside>
+<section class="card"><div class="mn"><button data-m="-1" aria-label="Mês anterior">‹</button><b id="mt"></b><button data-m="1" aria-label="Próximo mês">›</button></div><div class="cal" id="cal"></div></section>
+<p class="note">Toque em uma data para abrir a semana dela. O ponto verde marca dias com registro. Os dados ficam salvos só neste navegador.</p>
+</aside>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const DN=['Segunda','Terça','Quarta','Quinta','Sexta'],J={440:'7:20',504:'8:24',528:'8:48',540:'9:00'},L={60:'1:00',90:'1:30'},N=['e','sa','v','s'],NL=['Marcar entrada','Marcar almoço','Marcar volta','Marcar saída'];
+let S={cfg:{j:440,l:60},days:{}};
+try{const r=localStorage.getItem('kp1');if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem('kp1',JSON.stringify(S))}catch(e){}};
+const m=t=>{if(!t)return null;const p=t.split(':');return +p[0]*60+ +p[1]};
+const f=x=>{x=((x%1440)+1440)%1440;return String(Math.floor(x/60)).padStart(2,'0')+':'+String(x%60).padStart(2,'0')};
+const d=x=>{const s=x<0?'-':'';x=Math.abs(Math.round(x));return s+Math.floor(x/60)+':'+String(x%60).padStart(2,'0')};
+const parseDuration=value=>{
+ const match=String(value||'').trim().match(/^(\\d{1,2}):(\\d{1,2})$/);
+ if(!match)return null;
+ const hours=Number(match[1]),minutes=Number(match[2]),total=hours*60+minutes;
+ return minutes<=59&&total>0&&total<=720?total:null;
+};
+const sg=x=>(x>0?'+':'')+d(x);
+const iso=D=>D.getFullYear()+'-'+String(D.getMonth()+1).padStart(2,'0')+'-'+String(D.getDate()).padStart(2,'0');
+const add=(D,n)=>{const x=new Date(D);x.setDate(x.getDate()+n);return x};
+const mon=D=>add(D,-((D.getDay()+6)%7));
+const noon=()=>{const x=new Date();x.setHours(12,0,0,0);return x};
+let sel=noon(),cm=new Date(sel.getFullYear(),sel.getMonth(),1);
+const cap=s=>s[0].toUpperCase()+s.slice(1);
+
+function calc(){
+ const j=S.cfg.j,gf=j===540?480:j,mo=mon(sel);let bank=0,tot=0;
+ const rows=[0,1,2,3,4].map(i=>{
+  const D=add(mo,i),k=iso(D),r=S.days[k]||{},l=r.l||S.cfg.l,e=m(r.e),sa=m(r.sa),v=m(r.v),s=m(r.s);
+  const w=[e,sa,v,s].every(x=>x!=null)?(sa-e)+(s-v):null;
+  if(w!=null){tot+=w;if(i<4)bank+=w-j}
+  return{i,D,k,r,l,e,sa,v,w}});
+ const need=Math.max(0,gf-bank);
+ rows.forEach(o=>{
+  o.base=o.i===4?gf:j;o.need=o.i===4?need:j;
+  if(o.e!=null){
+   o.lim=o.e+360;
+   if(o.sa!=null){o.ret=o.v!=null?o.v:o.sa+o.l;o.out=o.ret+o.need-(o.sa-o.e)}
+   else{o.out=o.e+o.need+(o.need>360?o.l:0);o.est=1}
+  }});
+ return{rows,bank,tot,need,j,gf,target:4*j+gf}
+}
+
+function render(){
+ const W=calc(),j=W.j,dl=S.cfg.l,mo=mon(sel),T=iso(new Date()),F=W.rows[4];
+ $('#sj').innerHTML=Object.entries(J).map(([v,t])=>`<button data-j="${v}" class="${+v===j?'on':''}">${t}</button>`).join('');
+ $('#fn').textContent=j===540?'Sexta-feira: jornada de 8:00':'';
+ $('#sl').innerHTML=Object.entries(L).map(([v,t])=>`<button data-l="${v}" class="${+v===dl?'on':''}">${t}</button>`).join('');
+ $('#st').innerHTML=[
+  ['Trabalhado na semana',d(W.tot),'meta '+d(W.target),'',''],
+  ['Banco de segunda a quinta',sg(W.bank),'horas acumuladas',W.bank>=0?'ok':'bad',''],
+  ['Sair na sexta-feira',F.out!=null?f(F.out):'—','trabalhar '+d(W.need)+' no dia','','hero']
+ ].map(([a,b,c,z,h])=>`<div class="st ${h}"><span>${a}</span><b class="${z}">${b}</b><span>${c}</span></div>`).join('');
+ const o2={day:'numeric',month:'short'};
+ $('#wk').textContent='Semana de '+mo.toLocaleDateString('pt-BR',o2)+' a '+add(mo,4).toLocaleDateString('pt-BR',{day:'numeric',month:'short',year:'numeric'});
+ $('#days').innerHTML=W.rows.map(o=>{
+  const{i,D,k,r,l,e,sa,w,need,base,lim,ret,out,est}=o,over=sa!=null&&e!=null&&sa-e>360;
+  const inp=(q,lab)=>`<label>${lab}<input type="time" data-k="${k}" data-f="${q}" value="${r[q]||''}"></label>`;
+  const c=[];
+  if(lim!=null)c.push(`<span class="chip${over?' bad':''}">${over?'Mais de 6h corridas, o limite era':'Almoçar até'} <b>${f(lim)}</b></span>`);
+  if(ret!=null)c.push(`<span class="chip">Volta às <b>${f(ret)}</b></span>`);
+  if(out!=null)c.push(`<span class="chip pri">${est?'Saída prevista':'Sair às'} <b>${f(out)}</b></span>`);
+  if(w!=null){c.push(`<span class="chip">Trabalhado <b>${d(w)}</b></span>`);c.push(`<span class="chip ${w>=base?'ok':'warn'}">Saldo do dia <b>${sg(w-base)}</b></span>`)}
+  return `<div class="day${k===T?' td':''}"><div class="dh"><b>${DN[i]}</b><span class="dt">${D.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</span><span class="goal">Meta ${d(need)}</span><div class="day-actions"><label class="lu">Almoço (h:mm) <input class="lunch-duration" type="text" inputmode="numeric" placeholder="1:00" title="Duração do almoço no formato horas:minutos" data-k="${k}" data-f="l" value="${Math.floor(l/60)+':'+String(l%60).padStart(2,'0')}"></label><button type="button" class="clear-day" data-clear-day="${k}">Limpar dia</button></div></div><div class="g">${inp('e','Entrada')}${inp('sa','Saída p/ almoço')}${inp('v','Volta')}${inp('s','Saída')}</div><div class="cs">${c.join('')}</div></div>`}).join('');
+ const td=S.days[T]||{},ni=N.findIndex(x=>!td[x]),wd=new Date().getDay(),b=$('#now');
+ b.textContent=wd<1||wd>5?'Fim de semana':ni<0?'Dia completo':NL[ni];b.disabled=wd<1||wd>5||ni<0;
+ cal(T,mo);
+}
+
+function cal(T,mo){
+ const y=cm.getFullYear(),mm=cm.getMonth(),first=new Date(y,mm,1),start=add(first,-first.getDay()),a=iso(mo),z=iso(add(mo,4));
+ let h=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(x=>`<i>${x}</i>`).join('');
+ for(let n=0;n<42;n++){const D=add(start,n),k=iso(D),r=S.days[k];
+  const c=[D.getMonth()!==mm?'o':'',k===T?'t':'',k>=a&&k<=z?'w':'',r&&r.e?'h':''].join(' ');
+  h+=`<button class="${c}" data-d="${k}">${D.getDate()}</button>`}
+ $('#cal').innerHTML=h;
+ $('#mt').textContent=cap(cm.toLocaleDateString('pt-BR',{month:'long',year:'numeric'}));
+}
+
+
+function monthSummary(){
+  const y=cm.getFullYear(),mm=cm.getMonth(),prefix=y+'-'+String(mm+1).padStart(2,'0')+'-';
+  const entries=Object.entries(S.days).filter(([k])=>k.startsWith(prefix)).sort(([a],[b])=>a.localeCompare(b));
+  let worked=0,planned=0,complete=0,incomplete=0;
+  for(const [k,r] of entries){
+    const vals=[m(r.e),m(r.sa),m(r.v),m(r.s)];
+    const count=vals.filter(x=>x!=null).length;
+    if(count===4 && vals[1]>=vals[0] && vals[3]>=vals[2]){
+      const w=(vals[1]-vals[0])+(vals[3]-vals[2]);
+      const date=new Date(+k.slice(0,4),+k.slice(5,7)-1,+k.slice(8,10),12);
+      const weekday=date.getDay();
+      if(weekday>=1&&weekday<=5){worked+=w;planned+=(weekday===5?(S.cfg.j===540?480:S.cfg.j):S.cfg.j);complete++;}
+    } else if(count>0) incomplete++;
+  }
+  const saldo=worked-planned;
+  $('#monthlabel').textContent=cap(cm.toLocaleDateString('pt-BR',{month:'long',year:'numeric'}));
+  $('#monthsummary').innerHTML=[
+    ['Horas trabalhadas',d(worked)],['Horas previstas',d(planned)],
+    ['Saldo dos dias completos',sg(saldo)],['Dias completos',String(complete)],
+    ['Registros incompletos',String(incomplete)],['Dias com algum registro',String(entries.length)]
+  ].map(([a,b])=>`<div class="monthitem"><span>${a}</span><b>${b}</b></div>`).join('');
+}
+function downloadFile(name,content,type){
+  const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function exportBackup(){
+  const payload={app:'Karol’sPonto',version:1,exportedAt:new Date().toISOString(),data:S};
+  downloadFile('karols-ponto-backup-'+iso(new Date())+'.json',JSON.stringify(payload,null,2),'application/json');
+}
+function exportCSV(){
+  const rows=[['Data','Entrada','Saída almoço','Volta almoço','Saída','Intervalo (min)','Horas trabalhadas']];
+  Object.entries(S.days).sort(([a],[b])=>a.localeCompare(b)).forEach(([k,r])=>{
+    const e=m(r.e),sa=m(r.sa),v=m(r.v),out=m(r.s);
+    const worked=[e,sa,v,out].every(x=>x!=null)?(sa-e)+(out-v):null;
+    rows.push([k,r.e||'',r.sa||'',r.v||'',r.s||'',r.l??S.cfg.l,worked==null?'':d(worked)]);
+  });
+  const csv='\ufeff'+rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+  downloadFile('karols-ponto-registros.csv',csv,'text/csv;charset=utf-8');
+}
+function restoreBackup(file){
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const parsed=JSON.parse(reader.result),data=parsed.data||parsed;
+      if(!data||!data.cfg||!data.days||typeof data.days!=='object')throw new Error('Formato inválido');
+      if(!confirm('Restaurar este backup substituirá os dados atuais deste navegador. Deseja continuar?'))return;
+      S={cfg:{j:[440,504,528,540].includes(+data.cfg.j)?+data.cfg.j:440,l:[60,90].includes(+data.cfg.l)?+data.cfg.l:60},days:data.days};
+      save();render();alert('Backup restaurado com sucesso.');
+    }catch(err){alert('Não foi possível restaurar. Verifique se o arquivo é um backup válido do Karol’sPonto.');}
+  };
+  reader.readAsText(file);
+}
+
+document.addEventListener('change',e=>{
+ const t=e.target,k=t.dataset.k;if(!k)return;
+ const r=S.days[k]=S.days[k]||{},q=t.dataset.f;
+ if(q==='l'){
+  const duration=parseDuration(t.value);
+  if(duration==null){alert('Informe o almoço no formato horas:minutos, por exemplo 1:32.');render();return;}
+  r.l=duration;
+ }else if(t.value)r[q]=t.value;else delete r[q];
+ save();render();
+});
+
+document.addEventListener('click',e=>{
+ const t=e.target.closest('button');if(!t)return;const a=t.dataset;
+ if(a.clearDay!==undefined){
+  const key=a.clearDay;
+  if(!S.days[key])return;
+  if(!confirm('Deseja apagar todos os registros deste dia? Esta ação não pode ser desfeita.'))return;
+  delete S.days[key];
+  save();
+  render();
+  return;
+ }
+ if(a.j)S.cfg.j=+a.j;
+ else if(a.l)S.cfg.l=+a.l;
+ else if(a.w!==undefined){sel=a.w==='0'?noon():add(sel,7*a.w);cm=new Date(sel.getFullYear(),sel.getMonth(),1)}
+ else if(a.m)cm=new Date(cm.getFullYear(),cm.getMonth()+ +a.m,1);
+ else if(a.d){const p=a.d.split('-');sel=new Date(+p[0],p[1]-1,+p[2],12);cm=new Date(sel.getFullYear(),sel.getMonth(),1)}
+ else if(t.id==='now'){const n=new Date(),k=iso(n),r=S.days[k]=S.days[k]||{},x=N.find(y=>!r[y]);if(!x)return;r[x]=f(n.getHours()*60+n.getMinutes());sel=noon();cm=new Date(sel.getFullYear(),sel.getMonth(),1)}
+ else return;
+ save();render()});
+
+$('#backup').addEventListener('click',exportBackup);
+$('#restore').addEventListener('click',()=>$('#backupfile').click());
+$('#backupfile').addEventListener('change',e=>{if(e.target.files[0])restoreBackup(e.target.files[0]);e.target.value='';});
+$('#csv').addEventListener('click',exportCSV);
+$('#print').addEventListener('click',()=>window.print());
+
+render();
+</script>
+</body>
+</html>
